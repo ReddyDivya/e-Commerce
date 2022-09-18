@@ -9,12 +9,10 @@ function App() {
 
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
-  const [error, setError] = useState(false);
 
   //fetching the products from commerce
   const fetchProducts = async () => {
     const { data } = await commerce.products.list();
-
     setProducts(data);
   };
 
@@ -35,18 +33,13 @@ function App() {
     fetchCart();
   }, []);
 
-  console.log('error >> ' + error);
   console.log('cart >> ' + cart);
 
-
-  if (error) {
-    return <h1>Caught an error</h1>
-  }
   return (
     <div>
       <Navbar totalItems={cart.total_items} />
       <Products products={products} onAddToCart={handleAddToCart} />
-      {/* <Cart cart={cart} /> */}
+      <Cart cart={cart} />
       {/* <Switch>
             <Route exact path="/">
               <Products products={products} onAddToCart={handleAddToCart} />
