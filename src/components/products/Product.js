@@ -1,15 +1,24 @@
 import React from 'react'
 
-export default function Product() {
+export default function Product({ product, onAddToCart }) {
+
+    // const handleAddToCart = () => onAddToCart(product.id, 1);
+
     return (
-        <div className="m-2 max-w-sm bg-white overflow-hidden rounded-lg border border-gray-200 shadow-lg hover:bg-gray-100">
-            <img className="p-6 rounded-t-lg" src="https://images.unsplash.com/photo-1484704849700-f032a568e944?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aGVhZHBob25lc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" />
-            <article className="prose lg:prose-xl">
-                <h1 className="text-gray-900 dark:text-white">Head Phones</h1>
-                <p className="">
-                    Maono Au-Mh601S Wired Over Ear Studio Headphones with Mic, Stereo Monitor Closed Back Headsets with Detachable Cable and 50Mm Driver for Dj, Recording Studio,
-                </p>
-            </article>
-        </div>
+        <div className="max-w-sm max-h-sm bg-white rounded-lg border border-gray-200 shadow-lg">
+            <img className="rounded-t-lg" src={product.image.url} />
+            <article className="p-4 prose lg:prose-xl">
+                <p className="text-gray-500 font-bold">{product.name} | {product.price.formatted_with_symbol}</p>
+                <p dangerouslySetInnerHTML={{ __html: product.description }} className="text-xs text-slate-50" />
+                <div className="flex items-center mt-2.5 mb-5">
+                    ⭐⭐⭐⭐⭐
+                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">5.0</span>
+                </div>
+                <div className="flex mt-4 space-x-3">
+                    <button onClick={() => onAddToCart(product.id, 1)} className="inline-flex items-center py-4 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800">Add to Cart</button>
+                    <button className="inline-flex items-center py-4 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800">Buy Now</button>
+                </div>
+            </article >
+        </div >
     )
 }
