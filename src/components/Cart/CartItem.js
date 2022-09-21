@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function CartItem({ item }) {
+export default function CartItem({ item, onUpdateCartQty, onRemovefromCart }) {
 
     return (
 
@@ -17,12 +17,12 @@ export default function CartItem({ item }) {
                         <p className="p-4">{item.line_total.formatted_with_symbol}</p>
                     </div>
                     <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                        <button className="bg-blue-700 font-bold p-4 items-center rounded-full text-white">+</button>
+                        <button className="bg-blue-700 font-bold p-4 items-center rounded-full text-white" onClick={() => onUpdateCartQty(item.id, item.quantity + 1)}>+</button>
                         <p className="p-3">{item.quantity}</p>
-                        <button className="bg-blue-700 font-bold p-4 items-center rounded-full text-white">-</button>
+                        <button className="bg-blue-700 font-bold p-4 items-center rounded-full text-white" onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}>-</button>
                     </div>
                     <div className="m-3">
-                        <button className="font-medium bg-red-700 px-2 py-2.5 rounded text-white">Remove</button>
+                        <button className="font-medium bg-red-700 px-2 py-2.5 rounded text-white" onClick={() => onRemovefromCart(item.id)}>Remove</button>
                     </div>
                 </div>
             </li>
