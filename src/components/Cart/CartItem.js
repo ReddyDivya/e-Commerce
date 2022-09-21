@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function CartItem({ item }) {
-    // console.log(Object.keys(item.length))
     const EmptyCart = () => {
         <h3>You have no items in your shopping cart, start adding some!</h3>
     }
