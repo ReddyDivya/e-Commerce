@@ -4,7 +4,7 @@ export default function CartItem({ item }) {
     return (
         <div>
             <li className="py-3 sm:py-4">
-                <div className="flex items-center space-x-4" key={item.id}>
+                <div className="flex items-center space-x-4">
                     <div className="flex-shrink-0">
                         <img className="w-8 h-8 rounded-full" src={item.media} alt="item" />
                     </div>

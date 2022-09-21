@@ -39,9 +39,9 @@ export default function Navbar({ totalItems }) {
             </nav>
 
             {/* 👇️ Wrapping Route components in a Routes component */}
-            <Routes>
+            {/* <Routes>
                 <Route path="/products" element={<Products />} />
-            </Routes>
+            </Routes> */}
         </Router >
     )
 }

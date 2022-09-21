@@ -26,6 +26,7 @@ function App() {
   const handleAddToCart = async (productId, quantity) => {
     const item = await commerce.cart.add(productId, quantity);
     setCart(item.cart);
+    fetchCart();//fetching to update the cart count
   };
 
   useEffect(() => {
@@ -37,9 +38,9 @@ function App() {
 
   return (
     <div>
-      <Navbar totalItems={cart.total_items} />
+      <Navbar totalItems={(cart != null || cart != undefined) ? cart.total_items : 0} />
       <Products products={products} onAddToCart={handleAddToCart} />
-      <Cart cart={cart} />
+      {cart.total_items > 0 && <Cart cart={cart} />}
       {/* <Switch>
             <Route exact path="/">
               <Products products={products} onAddToCart={handleAddToCart} />

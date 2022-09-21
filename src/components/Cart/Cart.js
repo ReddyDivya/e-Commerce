@@ -15,7 +15,7 @@ export default function Cart({ cart }) {
                     <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                         {
                             cart.line_items.map((lineItem) => (
-                                <CartItem item={lineItem} />
+                                <CartItem item={lineItem} key={lineItem.id} />
                             ))
                         }
                     </ul>
