@@ -1,16 +1,13 @@
 import React from 'react'
 
 export default function CartItem({ item }) {
-    const EmptyCart = () => {
-        <h3>You have no items in your shopping cart, start adding some!</h3>
-    }
 
     return (
 
         < div >
             <li className="py-3 sm:py-4 items-center">
                 <div className="flex items-center">
-                    <div className="flex-shrink-0">
+                    <div className="flex-0">
                         <img className="w-8 h-8 rounded" src={item.image.url} alt={item.name} />
                     </div>
                     <div className="flex-1 m-4 p-2">
@@ -25,7 +22,7 @@ export default function CartItem({ item }) {
                         <button className="bg-blue-700 font-bold p-4 items-center rounded-full text-white">-</button>
                     </div>
                     <div className="m-3">
-                        <button className="font-medium bg-blue-700 px-2 py-2.5 rounded text-white">Remove</button>
+                        <button className="font-medium bg-red-700 px-2 py-2.5 rounded text-white">Remove</button>
                     </div>
                 </div>
             </li>

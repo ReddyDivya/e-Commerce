@@ -1,15 +1,25 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 import CartItem from "../Cart/CartItem";
 
 export default function Cart({ cart }) {
-    return (
-        <div>
-            <div className="m-10 p-3 w-2/4 bg-white rounded-lg border shadow-md">
+
+    const EmptyCart = () => {
+        return (
+            <div>
+                <article class="prose lg:prose-xl">
+                    You have no items in your shopping cart,
+                    &nbsp;<Link to="/products">start adding some!</Link>
+                </article>
+            </div>
+        )
+    }
+
+    const FilledCart = () => {
+        return (
+            <>
                 <div className="flex justify-between items-center mb-4">
-                    <h5 className="text-xl font-bold text-gray-900">Cart Items</h5>
-                    <a href="#" className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
-                        View all
-                    </a>
+                    <h5 className="text-5xl font-bold text-gray-900">Cart Items</h5>
                 </div>
                 <div className="flow-root">
                     <ul className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -20,8 +30,15 @@ export default function Cart({ cart }) {
                         }
                     </ul>
                 </div>
-            </div>
+            </>
+        )
+    }
 
+    return (
+        <div className="m-10 p-4 w-4/4 bg-white rounded-lg border shadow-md">
+            {
+                (cart.total_items > 0 ? FilledCart() : EmptyCart())
+            }
         </div>
     )
 }
