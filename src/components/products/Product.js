@@ -2,8 +2,6 @@ import React from 'react'
 
 export default function Product({ product, onAddToCart }) {
 
-    // const handleAddToCart = () => onAddToCart(product.id, 1);
-
     return (
         <div className="max-w-sm max-h-sm bg-white rounded-lg border border-gray-200 shadow-lg">
             <img className="rounded-t-lg" src={product.image.url} />
