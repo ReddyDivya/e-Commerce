@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import Products from "./components/Products/Products";
 import Cart from "./components/Cart/Cart";
+import Checkout from "./components/Checkout/Checkout";
 
 function App() {
 
@@ -27,25 +28,21 @@ function App() {
     const response = await commerce.cart.add(productId, quantity);
 
     setCart(response.cart);
-    // fetchCart();//fetching to update the cart count
   };
 
   const handleUpdateCartQty = async (productId, quantity) => {
     const response = await commerce.cart.update(productId, { quantity });
     setCart(response.cart);
-    // fetchCart();//fetching to update the cart count
   }
 
   const handleRemovefromCart = async (productId) => {
     const response = await commerce.cart.remove(productId);
     setCart(response.cart);
-    // fetchCart();//fetching cart info
   }
 
   const handleEmptyCart = () => {
     const response = commerce.cart.empty();
     setCart(response.cart);
-    // fetchCart();//fetching cart info
   }
 
   useEffect(() => {
@@ -66,6 +63,7 @@ function App() {
             handleRemovefromCart={handleRemovefromCart}
             handleEmptyCart={handleEmptyCart}
           />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div >
     </Router>
