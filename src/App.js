@@ -27,31 +27,31 @@ function App() {
     const response = await commerce.cart.add(productId, quantity);
 
     setCart(response.cart);
-    fetchCart();//fetching to update the cart count
+    // fetchCart();//fetching to update the cart count
   };
 
   const handleUpdateCartQty = async (productId, quantity) => {
     const response = await commerce.cart.update(productId, { quantity });
     setCart(response.cart);
-    fetchCart();//fetching to update the cart count
+    // fetchCart();//fetching to update the cart count
   }
 
   const handleRemovefromCart = async (productId) => {
     const response = await commerce.cart.remove(productId);
     setCart(response.cart);
-    fetchCart();//fetching cart info
+    // fetchCart();//fetching cart info
   }
 
   const handleEmptyCart = () => {
     const response = commerce.cart.empty();
     setCart(response.cart);
-    fetchCart();//fetching cart info
+    // fetchCart();//fetching cart info
   }
 
   useEffect(() => {
     fetchProducts();
     fetchCart();
-  }, []);
+  }, [cart]);
 
   return (
     <Router>
