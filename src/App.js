@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import Products from "./components/Products/Products";
 import Cart from "./components/Cart/Cart";
-import Checkout from "./components/Checkout/Checkout";
+import CheckoutForm from "./components/Checkout/CheckoutForm";
 
 function App() {
 
@@ -63,7 +63,7 @@ function App() {
             handleRemovefromCart={handleRemovefromCart}
             handleEmptyCart={handleEmptyCart}
           />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/CheckoutForm" element={<CheckoutForm />} />
         </Routes>
       </div >
     </Router>
