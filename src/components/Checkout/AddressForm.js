@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { Checkbox, InputLabel, Select, MenuItem, Button, Grid, Typography } from "@material-ui/core";
 import { useForm, Controller, FormProvider } from "react-hook-form";
 import CustomTextField from "./CustomTextField";
 
 function AddressForm() {
 
+    const [data, setData] = useState();
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         // defaultValues: {
         //     firstName: "",
@@ -15,7 +16,7 @@ function AddressForm() {
 
     // form submit function which will invoke after successful validation
     const onSubmit = (data) => {
-        console.log(data)
+        setData(data);
     }
 
     return (
@@ -26,7 +27,7 @@ function AddressForm() {
                     {/* <Grid container spacing={3}> */}
                     <div>
                         {/* registering our input into the hook by invoking the "register" function */}
-                        <input type="text" defaultValue="Divya" {...register("firstName", {
+                        <input type="text" name="firstName" {...register("firstName", {
                             required: "First Name is required",
                             minLength: {
                                 value: 4,
@@ -40,7 +41,7 @@ function AddressForm() {
                         <p>{errors.firstName?.message}</p>
                     </div>
                     <div>
-                        <input type="text" defaultValue="reddy" {...register("lastName",
+                        <input type="text" name="lastName" {...register("lastName",
                             {
                                 required: "Last Name is required",
                                 minLength: {
@@ -69,7 +70,7 @@ function AddressForm() {
                         <CustomTextField required name="city" label="city" />
                         <CustomTextField required name="zip" label="ZIP" /> */}
                     <div>
-                        <input type="submit" />
+                        <button>Submit</button>
                     </div>
                     {/* </Grid> */}
                 </form>
