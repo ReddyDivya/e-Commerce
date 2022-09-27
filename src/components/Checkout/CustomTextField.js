@@ -19,6 +19,7 @@ function CustomTextField({ name, label, required }) {
                 fullWidth
                 required={required}
                 error={isError}
+                render={({ field }) => <TextField {...field} />}
             />
         </Grid>
     )

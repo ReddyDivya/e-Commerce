@@ -5,7 +5,10 @@ import CustomTextField from "./CustomTextField";
 
 function AddressForm() {
 
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [data, setData] = useState();
+
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         // defaultValues: {
         //     firstName: "",
@@ -18,6 +21,8 @@ function AddressForm() {
     const onSubmit = (data) => {
         setData(data);
     }
+
+
 
     return (
         <>
@@ -35,6 +40,8 @@ function AddressForm() {
                             },
                             maxLength: 20
                         })} placeholder="First Name"
+                            onChange={(e) => setFirstName(e.target.value)}
+                            value={firstName}
                         />
 
                         {/* errors will return when field validation fails  */}
@@ -49,7 +56,10 @@ function AddressForm() {
                                     message: "minimum length is 4"
                                 },
                                 maxLength: 20
-                            })} placeholder="Last Name" />
+                            })} placeholder="Last Name"
+                            onChange={(e) => setLastName(e.target.value)}
+                            value={lastName}
+                        />
 
                         {/* errors will return when field validation fails  */}
                         <p>{errors.lastName?.message}</p>
