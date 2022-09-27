@@ -26,7 +26,7 @@ function AddressForm() {
                     <Grid container spacing={3}>
                         <div>
                             {/* registering our input into the hook by invoking the "register" function */}
-                            <input defaultValue="Div" {...register("firstName", {
+                            <input type="text" defaultValue="Div" {...register("firstName", {
                                 required: "First Name is required",
                                 minLength: {
                                     value: 4,
@@ -40,7 +40,7 @@ function AddressForm() {
                             <p>{errors.firstName?.message}</p>
                         </div>
                         <div>
-                            <input {...register("lastName",
+                            <input type="text" {...register("lastName",
                                 {
                                     required: "Last Name is required",
                                     minLength: {

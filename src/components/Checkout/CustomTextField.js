@@ -2,7 +2,9 @@ import React from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { TextField, Grid } from '@material-ui/core';
 
-function CustomTextField({ name, label, required }) {
+function CustomTextField({ name, label }) {
+
+    console.log(name, label)
 
     const { control } = useFormContext();
     const isError = false;
@@ -10,13 +12,9 @@ function CustomTextField({ name, label, required }) {
     return (
         <Grid item xs={12} sm={6}>
             <Controller
-                as={TextField}
-                name={name}
-                control={control}
-                label={label}
+                name="firstName"
+                label="First Name"
                 fullWidth
-                required={required}
-                error={isError}
             />
         </Grid>
     )
