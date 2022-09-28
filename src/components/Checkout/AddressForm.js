@@ -5,8 +5,8 @@ import CustomTextField from "./CustomTextField";
 
 function AddressForm() {
 
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [firstName, setFirstName] = useState();
+    const [lastName, setLastName] = useState();
     const [data, setData] = useState();
 
     const { register, handleSubmit, control, formState: { errors } } = useForm();
