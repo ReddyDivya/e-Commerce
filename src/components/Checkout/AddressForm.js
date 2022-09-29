@@ -1,100 +1,108 @@
-import React, { useState } from 'react';
-import { Typography, InputLabel, TextField } from "@material-ui/core";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import React, { useState } from "react";
+import { useForm, useFormState, useWatch } from "react-hook-form";
 
-export default function AddressForm() {
+let renderCount = 0;
 
-    const [firstName, setFirstName] = useState('');
-    const [data, setData] = useState('');
-
-    // const [lastName, setLastName] = useState();
-    // const [email, setEmail] = useState();
-    // const [age, setAge] = useState();
-    // const [address, setAddress] = useState();
-
-    // const [myFormFields, setFormFields] = useState({
-    //     firstName: '',
-    //     lastName: '',
-    //     email: '',
-    //     age: '',
-    //     address: '',
-    // })
-
-    const schema = yup.object().shape({
-        firstName: yup.string().required("First Name should be required please"),
-        lastName: yup.string().required("Last Name should be required please"),
-        email: yup.string().email().required("Email should be required please"),
-        age: yup.number().positive().integer().required(),
-        address: yup.string().required("Address should be required please"),
-        // password: yup.string().min(4).max(15).required(),
-        // confirmPassword: yup.string().oneOf([yup.ref("password"), null]),
+const Controller = ({ control, register, name, rules, render }) => {
+    const value = useWatch({
+        control,
+        name
     });
+    const { errors } = useFormState({
+        control,
+        name
+    });
+    const props = register(name, rules);
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm({
-        resolver: yupResolver(schema)
-    });//destructuring hook
+    console.log(errors);
 
+    return render({
+        value,
+        onChange: (e) =>
+            props.onChange({
+                target: {
+                    name,
+                    value: e.target.value
+                }
+            }),
+        onBlur: props.onBlur,
+        name: props.name
+    });
+};
 
-    // Always have your functions before your return to keep state batches in sync.
-    // const onFormFieldChange = (e) => {
-    //     // No need to return this function can be void
-    //     e.preventDefault();
-    //     setFormFields({
-    //         ...myFormFields,
-    //         [e.target.name]: e.target.value
-    //     })
-    // }
+const Input = (props) => {
+    const [value, setValue] = React.useState(props.value || "");
 
-    // alert(data);
+    React.useEffect(() => {
+        setValue(props.value);
+    }, [props.value]);
 
     return (
-        <>
-            <Typography varient="h6" gutterBottom>Shipping Address</Typography>
-            <form onSubmit={handleSubmit(data => setData(data))}>
-                {/* First Name */}
-                <section>
-                    {/* <input type='text' placeholder='First Name...' name="firstName" {...register('firstName')} onChange={onFormFieldChange} value={myFormFields.firstName || ''} /> */}
+        <input
+            name={props.name}
+            onChange={(e) => {
+                setValue(e.target.value);
+                props.onChange && props.onChange(e);
+            }}
+            value={value}
+        />
+    );
+};
 
-                    <Controller
-                        name="firstName"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => {
-                            return <TextField {...field}
-                                placeholder="Enter your First Name"
-                                onChange={(e) => field.onChange(e.target.value)}
-                                value={field.value || ''}
-                            />
-                        }}
-                    />
-                    {/* <p>{errors.myFormFields.firstName?.message}</p> */}
-                </section>
-                <section>
-                    {/* <input type='text' placeholder='Last Name...' name="lastName" {...register('lastName')} onChange={onFormFieldChange} value={myFormFields.lastName || ''} /> */}
-                    {/* <p>{errors.lastName?.message}</p> */}
-                </section>
-                {/* Email */}
-                <section>
-                    {/* <input type='text' placeholder='Email...' name="email" {...register('email')} onChange={onFormFieldChange} value={myFormFields.email || ''} /> */}
-                    {/* <p>{errors.email?.message}</p> */}
-                </section>
-                {/* Age */}
-                <section>
-                    {/* <input type='number' placeholder='age' name="age" {...register('age')} onChange={onFormFieldChange} value={myFormFields.age || ''} /> */}
-                    {/* <p>{errors.age?.message}</p> */}
-                </section>
-                {/* Address */}
-                <section>
-                    {/* <input type='text' placeholder='Address' name="address"  {...register('address')} onChange={onFormFieldChange} value={myFormFields.address || ''} /> */}
-                    {/* <p>{errors.address?.message}</p> */}
-                </section>
+export default function AddressForm() {
+    const {
+        register,
+        handleSubmit,
+        control,
+        setValue,
+        formState: { errors }
+    } = useForm({
+        defaultValues: {
+            firstName: "",
+            lastName: ""
+        }
+    });
+    const [submittedVal, setSubmittedVal] = useState();
+    const onSubmit = (data) => {
+        console.log(data);
+        setSubmittedVal(data);
+    };
+    renderCount++;
 
-                <section>
-                    <input type="submit" id="submit" value="Submit" />
-                </section>
+    console.log("errors", errors);
+
+    React.useEffect(() => {
+        setTimeout(() => {
+            setValue("lastName", "test");
+        }, 1000);
+    }, [setValue]);
+
+    return (
+        <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <input {...register("firstName")} placeholder="First Name" />
+
+                <Controller
+                    {...{
+                        control,
+                        register,
+                        name: "lastName",
+                        rules: {
+                            required: true
+                        },
+                        render: (props) => <Input {...props} />
+                    }}
+                />
+
+                <input type="submit" />
             </form>
-        </>
-    )
+            {submittedVal && (
+                <div>
+                    Submitted Data:
+                    <br />
+                    {JSON.stringify(submittedVal)}
+                </div>
+            )}
+        </div>
+    );
 }
