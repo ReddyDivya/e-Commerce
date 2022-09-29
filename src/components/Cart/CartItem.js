@@ -3,8 +3,7 @@ import React from 'react'
 export default function CartItem({ item, onUpdateCartQty, onRemovefromCart }) {
 
     return (
-
-        < div >
+        <div>
             <li className="py-3 sm:py-4 items-center">
                 <div className="flex items-center">
                     <div className="flex-0">

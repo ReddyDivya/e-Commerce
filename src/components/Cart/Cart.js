@@ -36,7 +36,7 @@ export default function Cart({ cart, handleUpdateCartQty, handleRemovefromCart, 
                             <div className="m-10 items-center font-semibold text-white dark:text-white">
                                 <button className="bg-blue-700 font-bold p-4 rounded text-white" onClick={() => handleEmptyCart()}>Empty Cart</button>
                                 <button className="bg-blue-700 font-bold p-4 rounded text-white m-2">
-                                    <Link to="/CheckoutForm" component={CheckoutForm}>Checkout</Link>
+                                    <Link to="/CheckoutForm">Checkout</Link>
                                 </button>
                             </div>
                         </>

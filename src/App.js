@@ -58,6 +58,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/products" element={<Products products={products} onAddToCart={handleAddToCart} handleUpdateCartQty />} />
+
           <Route path="/cart" element={(cart != null || cart != undefined) && <Cart cart={cart}
             handleUpdateCartQty={handleUpdateCartQty}
             handleRemovefromCart={handleRemovefromCart}
