@@ -52,7 +52,7 @@ export default function AddressForm() {
     return (
         <>
             <Typography varient="h6" gutterBottom>Shipping Address</Typography>
-            <form onSubmit={handleSubmit(data => setData(data))}>
+            <form onSubmit={data => setData(data)}>
                 {/* First Name */}
                 <section>
                     {/* <input type='text' placeholder='First Name...' name="firstName" {...register('firstName')} onChange={onFormFieldChange} value={myFormFields.firstName || ''} /> */}
@@ -69,7 +69,7 @@ export default function AddressForm() {
                             />
                         }}
                     />
-                    {/* <p>{errors.myFormFields.firstName?.message}</p> */}
+                    <p>{errors.firstName?.message}</p>
                 </section>
                 <section>
                     {/* <input type='text' placeholder='Last Name...' name="lastName" {...register('lastName')} onChange={onFormFieldChange} value={myFormFields.lastName || ''} /> */}
@@ -92,7 +92,7 @@ export default function AddressForm() {
                 </section>
 
                 <section>
-                    <input type="submit" id="submit" value="Submit" />
+                    <input type="submit" />
                 </section>
             </form>
         </>

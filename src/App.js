@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { commerce } from "./lib/commerce";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
@@ -7,10 +7,24 @@ import Products from "./components/Products/Products";
 import Cart from "./components/Cart/Cart";
 import CheckoutForm from "./components/Checkout/CheckoutForm";
 
+// custom hook for getting previous cart value 
+function usePrevious(cartVal) {
+
+  const previousRef = useRef();//the useRef Hook allows us to persist data between renders
+
+  useEffect(() => {
+    previousRef.current = cartVal;  //assign the ref's current value with the cart value
+  }, [cartVal]);//run this code when the value of the cart changes
+
+  return previousRef.current; //returning previous cart values
+}
+
 function App() {
 
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
+
+  const prevCart = usePrevious(cart);
 
   //fetching the products from commerce
   const fetchProducts = async () => {
@@ -46,27 +60,31 @@ function App() {
   }
 
   useEffect(() => {
-    fetchProducts();
-    fetchCart();
-  }, [cart]);
+
+    if (prevCart != cart) {
+      fetchProducts();
+      fetchCart();
+    }
+    return;
+
+  }, [prevCart]); //run this code when the value of previous cart changes
+
 
   return (
     <Router>
-      <div>
-        <Navbar totalItems={(cart != null || cart != undefined) ? cart.total_items : 0} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/products" element={<Products products={products} onAddToCart={handleAddToCart} handleUpdateCartQty />} />
+      <Navbar totalItems={(cart != null || cart != undefined) ? cart.total_items : 0} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/products" element={<Products products={products} onAddToCart={handleAddToCart} handleUpdateCartQty />} />
 
-          <Route path="/cart" element={(cart != null || cart != undefined) && <Cart cart={cart}
-            handleUpdateCartQty={handleUpdateCartQty}
-            handleRemovefromCart={handleRemovefromCart}
-            handleEmptyCart={handleEmptyCart}
-          />} />
-          <Route path="/CheckoutForm" element={<CheckoutForm />} />
-        </Routes>
-      </div >
+        <Route path="/cart" element={(cart != null || cart != undefined) && <Cart cart={cart}
+          handleUpdateCartQty={handleUpdateCartQty}
+          handleRemovefromCart={handleRemovefromCart}
+          handleEmptyCart={handleEmptyCart}
+        />} />
+        <Route path="/CheckoutForm" element={<CheckoutForm />} />
+      </Routes>
     </Router>
   );
 
