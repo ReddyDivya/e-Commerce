@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Checkbox, TextField, InputLabel, Select, MenuItem, Button, Grid, Typography } from "@material-ui/core";
+import CustomTextField from "./CustomTextField";
 import { useForm, Controller, FormProvider } from "react-hook-form";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
 
 export default function AddressForm() {
 
@@ -27,117 +28,27 @@ export default function AddressForm() {
         <>
             <form onSubmit={handleSubmit(data => console.log(data))} className="m-8 p-6 w-2/4">
                 <Typography variant="h6" gutterBottom>Shipping Address</Typography>
-                <section>
-                    <Controller
-                        name="firstName"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => {
-                            return <TextField {...field}
-                                placeholder="First Name..."
-                                onChange={(e) => field.onChange(e.target.value)}
-                                value={field.value || ''}
-                            />
-                        }}
-                    />
-                    {errors.firstName && <p>First name is required.</p>}
-                </section>
 
-                <section>
-                    <Controller
-                        name="lastName"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => {
-                            return <TextField {...field}
-                                placeholder="Last Name..."
-                                onChange={(e) => field.onChange(e.target.value)}
-                                value={field.value || ''}
-                            />
-                        }}
-                    />
-                    {errors.lastName && <p>Last name is required.</p>}
-                </section>
+                <CustomTextField name="firstName" label="First Name" control={control} />
+                {errors.firstName && <p>First Name is required.</p>}
 
-                <section>
-                    <Controller
-                        name="age"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => {
-                            return <TextField {...field}
-                                placeholder="Age..."
-                                onChange={(e) => field.onChange(e.target.value)}
-                                value={field.value || ''}
-                            />
-                        }}
-                    />
-                    {errors.age && <p>Please enter number for age.</p>}
-                </section>
+                <CustomTextField name="lastName" label="Last Name" control={control} />
+                {errors.lastName && <p>Last Name is required.</p>}
 
-                <section>
-                    <Controller
-                        name="email"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => {
-                            return <TextField {...field}
-                                placeholder="Email..."
-                                onChange={(e) => field.onChange(e.target.value)}
-                                value={field.value || ''}
-                            />
-                        }}
-                    />
-                    {errors.email && <p>Email is required.</p>}
-                </section>
+                <CustomTextField name="age" label="age" control={control} />
+                {errors.age && <p>Age is required.</p>}
 
-                <section>
-                    <Controller
-                        name="address"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => {
-                            return <TextField {...field}
-                                placeholder="Address"
-                                onChange={(e) => field.onChange(e.target.value)}
-                                value={field.value || ''}
-                            />
-                        }}
-                    />
-                    {errors.address && <p>Address is required.</p>}
-                </section>
+                <CustomTextField name="email" label="Email" control={control} />
+                {errors.email && <p>Email is required.</p>}
 
-                <section>
-                    <Controller
-                        name="city"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => {
-                            return <TextField {...field}
-                                placeholder="City"
-                                onChange={(e) => field.onChange(e.target.value)}
-                                value={field.value || ''}
-                            />
-                        }}
-                    />
-                    {errors.city && <p>City is required.</p>}
-                </section>
+                <CustomTextField name="address" label="Address" control={control} />
+                {errors.address && <p>Address is required.</p>}
 
-                <section>
-                    <Controller
-                        name="zip"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => {
-                            return <TextField {...field}
-                                placeholder="ZIP..."
-                                onChange={(e) => field.onChange(e.target.value)}
-                                value={field.value || ''}
-                            />
-                        }}
-                    />
-                    {errors.zip && <p>ZIP is required.</p>}
-                </section>
+                <CustomTextField name="city" label="City" control={control} />
+                {errors.city && <p>City is required.</p>}
+
+                <CustomTextField name="zip" label="Zip" control={control} />
+                {errors.zip && <p>Zip is required.</p>}
 
                 <input type="submit" className="border-solid border-2 border-sky-500 p-3 m-3 w-36 hover:bg-slate-300 cursor-pointer" />
             </form>
