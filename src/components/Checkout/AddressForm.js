@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Checkbox, TextField, InputLabel, Select, MenuItem, Button, Grid, Typography } from "@material-ui/core";
 import CustomTextField from "./CustomTextField";
 import { useForm, Controller, FormProvider } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { commerce } from '../../lib/commerce';
 
-export default function AddressForm() {
+export default function AddressForm({ checkoutToken, test }) {
 
     const [data, setData] = useState();
 
@@ -23,6 +24,7 @@ export default function AddressForm() {
     const [shippingOption, setShippingOption] = useState('');
 
 
+    //schema for form field validations
     const schema = yup.object().shape({
         firstName: yup.string().required("First Name should be required please"),
         lastName: yup.string().required("Last Name should be required please"),
@@ -36,6 +38,47 @@ export default function AddressForm() {
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });//destructuring hook
+
+    //fetching countries
+    const fetchShippingCountries = async (checkoutTokenId) => {
+        const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
+
+        setShippingCountries(countries);
+        setShippingCountry(Object.keys(countries)[0]);
+    }
+
+    //fetching sub divisions
+    const fetchSubdivisions = async (countryCode) => {
+        const { subdivisions } = await commerce.services.localeListShippingSubdivisions(countryCode);
+
+        setShippingSubdivisions(subdivisions);
+        setShippingSubdivision(Object.keys(subdivisions)[0]);
+    }
+
+    //fetching Shipping Options
+    const fetchShippingOptions = async (checkoutTokenId, country, stateProvince = null) => {
+        const options = await commerce.checkout.getShippingOptions(checkoutTokenId, { country, region: stateProvince });
+
+        setShippingOptions(options);
+        setShippingOption(options[0].id);
+    }
+
+    //fetching countries
+    useEffect(() => {
+        fetchShippingCountries(checkoutToken.id);
+    }, []);
+
+    //fetching subdivisions for a selected country
+    useEffect(() => {
+        if (shippingCountry)
+            fetchSubdivisions(shippingCountry)
+    }, [shippingCountry]);
+
+    //fetching shipping options on a selected shipping Subdivision
+    useEffect(() => {
+        if (shippingSubdivision)
+            fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision)
+    }, [shippingSubdivision])
 
     return (
         <>
@@ -66,7 +109,13 @@ export default function AddressForm() {
                 <Grid item xs={12} sm={6}>
                     <InputLabel>Shipping Country</InputLabel>
                     <Select fullWidth value={shippingCountry} onChange={(e) => setShippingCountry(e.target.value)}>
-
+                        {
+                            Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name })).map((item) => (
+                                <MenuItem key={item.id} value={item.id}>
+                                    {item.label}
+                                </MenuItem>
+                            ))
+                        }
                     </Select>
                 </Grid>
 
