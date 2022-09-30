@@ -10,6 +10,19 @@ export default function AddressForm() {
 
     const [data, setData] = useState();
 
+    //Countries
+    const [shippingCountries, setShippingCountries] = useState([]);
+    const [shippingCountry, setShippingCountry] = useState('');
+
+    //Sub divisions
+    const [shippingSubdivisions, setShippingSubdivisions] = useState([]);
+    const [shippingSubdivision, setShippingSubdivision] = useState('');
+
+    //Shipping Options
+    const [shippingOptions, setShippingOptions] = useState([]);
+    const [shippingOption, setShippingOption] = useState('');
+
+
     const schema = yup.object().shape({
         firstName: yup.string().required("First Name should be required please"),
         lastName: yup.string().required("Last Name should be required please"),
@@ -49,6 +62,13 @@ export default function AddressForm() {
 
                 <CustomTextField name="zip" label="Zip" control={control} />
                 {errors.zip && <p>Zip is required.</p>}
+
+                <Grid item xs={12} sm={6}>
+                    <InputLabel>Shipping Country</InputLabel>
+                    <Select fullWidth value={shippingCountry} onChange={(e) => setShippingCountry(e.target.value)}>
+
+                    </Select>
+                </Grid>
 
                 <input type="submit" className="border-solid border-2 border-sky-500 p-3 m-3 w-36 hover:bg-slate-300 cursor-pointer" />
             </form>
